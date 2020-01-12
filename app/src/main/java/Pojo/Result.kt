@@ -3,9 +3,11 @@ package Pojo
 
 import android.annotation.SuppressLint
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @SuppressLint("ParcelCreator")
-data class Result(
+@SuppressWarnings("serial")
+data class Result (
     @SerializedName("url")
     val url: String? = null,
     @SerializedName("section")
@@ -28,4 +30,5 @@ data class Result(
     val media: List<Media?>? = null,
     @SerializedName("column")
     val column: String? = null
-)
+)  : Serializable
+

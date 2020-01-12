@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@android:color/darker_gray">
+
+    <ImageView
+        android:id="@+id/singleItemImageView"
+        android:layout_width="61dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:contentDescription="TODO"
+        android:padding="5dp"
+        app:srcCompat="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/singleItemTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginBottom="3dp"
+            android:maxLines="1"
+            android:text="@string/title"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/singleItemSubTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:maxLines="1"
+            android:text="@string/subtitle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/singleItemByTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|left"
+                android:layout_weight="1"
+                android:gravity="bottom|start"
+                android:text="@string/by"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/singleItemDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|right"
+                android:layout_weight="1"
+                android:autoText="false"
+                android:drawableStart="@drawable/calendar"
+                android:gravity="bottom"
+                android:text="@string/date"
+                android:textAlignment="textStart"
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeTextType="uniform" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/goToUrlImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:contentDescription="TODO"
+        android:tag="goTUrl"
+        app:srcCompat="@drawable/read" />
+</LinearLayout>

@@ -3,8 +3,10 @@ package Pojo
 
 import android.annotation.SuppressLint
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @SuppressLint("ParcelCreator")
+@SuppressWarnings("serial")
 data class MediaMetadata(
     @SerializedName("url")
     val url: String? = null,
@@ -14,4 +16,4 @@ data class MediaMetadata(
     val height: Int? = null,
     @SerializedName("width")
     val width: Int? = null
-)
+) : Serializable

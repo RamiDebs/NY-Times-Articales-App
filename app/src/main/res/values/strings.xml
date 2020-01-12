@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">NY Times Articlaes</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="date">Date</string>
+    <string name="by">By</string>
+    <string name="subtitle">SubTitle</string>
+    <string name="title">Title</string>
 </resources>

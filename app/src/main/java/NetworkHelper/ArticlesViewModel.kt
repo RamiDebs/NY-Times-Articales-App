@@ -7,17 +7,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import Pojo.Result
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 class ArticlesViewModel : ViewModel() {
-    private val TAG = "ArticalesRepository"
+
+    private val TAG = "ArticlesRepository"
     internal val mArticleLiveData = MutableLiveData<List<Result>>()
+
     val NYTimesAPIServer =
         RetrofitClient.retrofitInstance?.create<NYTimesAPIServer>(
             NYTimesAPIServer::class.java)
     
-    fun createArticleLiveDat(): MutableLiveData<List<Result>> {
+    fun createArticleLiveData(): MutableLiveData<List<Result>> {
         NYTimesAPIServer?.getRepos()
             ?.enqueue(object : Callback<NYTimesResponse> {
                 override fun onResponse(call: Call<NYTimesResponse>, response: Response<NYTimesResponse>) {
