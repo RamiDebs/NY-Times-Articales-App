@@ -1,80 +1,38 @@
-package Adapters
+package debs.cora.nytimesarticlaes.ui.adapters
 
-import CodeUtilities.CodeUtil
-import Pojo.Result
-import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import debs.cora.nytimesarticlaes.ItemDetailActivity
-import debs.cora.nytimesarticlaes.ItemDetailFragment
-import debs.cora.nytimesarticlaes.ItemListActivity
 import debs.cora.nytimesarticlaes.R
+import debs.cora.nytimesarticlaes.utils.loadImage
 import kotlinx.android.synthetic.main.single_row_article.view.*
 
 
 class ArticlesRecyclerViewAdapter(
-    private val parentActivity: ItemListActivity,
-    private var values: List<Result>,
-    private val twoPane: Boolean
+    private var values: List<model.Result>
 ) :
     RecyclerView.Adapter<ArticlesRecyclerViewAdapter.ViewHolder>() {
 
+    private var onImageClicked: ((result: model.Result) -> Unit)? = null
+    private var onItemClicked: ((result: model.Result) -> Unit)? = null
+
+    fun setOnImageClicked(onImageClicked: (result: model.Result) -> Unit) {
+        this.onImageClicked = onImageClicked
+    }
+
+    fun setOnItemClicked(onItemClicked: (result: model.Result) -> Unit) {
+        this.onItemClicked = onItemClicked
+    }
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.titleView.text = item.title
-        holder.subtitleView.text = item.abstract
-        holder.dateView.text = item.publishedDate
-        holder.byView.text = item.source
+        holder.bind(item)
 
-        //set the tag of the NewsPaper image button to the item,'s url
-        holder.goToUrlImageButton.tag = item.url
-
-        //Load image url into image view
-        CodeUtil.loadImage(
-            holder.profileView,
-            item.media?.get(0)?.mediaMetadata?.get(0)?.url.toString()
-        )
-
-        with(holder.itemView) {
-            tag = item
-            setOnClickListener(onClickListener)
-        }
     }
 
-    private val onClickListener: View.OnClickListener
-
-    init {
-        onClickListener = View.OnClickListener { v ->
-            val item = v.tag as Result
-            if (twoPane) {
-                val fragment = ItemDetailFragment().apply {
-
-                    arguments = Bundle().apply {
-                        putSerializable("Result", item)
-                    }
-                }
-                parentActivity.supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
-                    .commit()
-            } else {
-                val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                    this.putExtra("Result", item)
-                }
-                v.context.startActivity(intent)
-            }
-        }
-    }
-
-    fun setData(values: List<Result>){
+    fun setData(values: List<model.Result>) {
         this.values = values
     }
 
@@ -87,27 +45,24 @@ class ArticlesRecyclerViewAdapter(
 
     override fun getItemCount() = values.size
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        val titleView: TextView = view.singleItemTitleTextView
-        val subtitleView: TextView = view.singleItemSubTitleTextView
-        val byView: TextView = view.singleItemByTextView
-        val dateView: TextView = view.singleItemDateTextView
-        val profileView: ImageView = view.singleItemImageView
-        val goToUrlImageButton: ImageButton = view.goToUrlImageButton
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+       
+        fun bind(item: model.Result) {
 
-        init {
-            goToUrlImageButton.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            if (v != null) {
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(v.tag as String?)
-                )
-
-                startActivity(v.context, browserIntent, null)
+            itemView.setOnClickListener {
+                onItemClicked?.invoke(item)
             }
+
+            itemView.goToUrlImageButton.setOnClickListener {
+                onImageClicked?.invoke(item)
+            }
+            itemView.singleItemTitleTextView.text = item.title
+            itemView.singleItemSubTitleTextView.text = item.abstract
+            itemView.singleItemDateTextView.text = item.publishedDate
+            itemView.singleItemByTextView.text = item.source
+            //getting the first image in the article and load it to the image view 
+            item.media?.get(0)?.mediaMetadata?.get(0).toString()?.let {itemView.singleItemImageView.loadImage(it)}
         }
+
     }
 }

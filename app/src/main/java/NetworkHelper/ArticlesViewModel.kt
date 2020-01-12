@@ -1,12 +1,12 @@
 package NetworkHelper
 
-import Pojo.NYTimesResponse
+import model.NYTimesResponse
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import Pojo.Result
+import model.Result
 import androidx.lifecycle.ViewModel
 
 class ArticlesViewModel : ViewModel() {

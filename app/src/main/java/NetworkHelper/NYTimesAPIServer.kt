@@ -1,6 +1,6 @@
 package NetworkHelper
 
-import Pojo.NYTimesResponse
+import model.NYTimesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 

@@ -1,12 +1,11 @@
 package debs.cora.nytimesarticlaes
 
-import Pojo.Result
+import model.Result
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import fragments.ItemDetailFragment
 import kotlinx.android.synthetic.main.activity_item_detail.*
 
 class ItemDetailActivity : AppCompatActivity() {

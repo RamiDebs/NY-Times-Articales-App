@@ -1,4 +1,4 @@
-package Pojo
+package model
 
 
 import android.annotation.SuppressLint
