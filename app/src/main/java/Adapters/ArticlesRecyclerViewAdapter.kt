@@ -1,5 +1,6 @@
 package debs.cora.nytimesarticlaes.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +62,8 @@ class ArticlesRecyclerViewAdapter(
             itemView.singleItemDateTextView.text = item.publishedDate
             itemView.singleItemByTextView.text = item.source
             //getting the first image in the article and load it to the image view 
-            item.media?.get(0)?.mediaMetadata?.get(0).toString()?.let {itemView.singleItemImageView.loadImage(it)}
+            item.media?.get(0)?.mediaMetadata?.get(0)?.url.let {itemView.singleItemImageView.loadImage(it.toString())}
+            Log.e("s",""+ item.media?.get(0)?.mediaMetadata?.get(0).toString())
         }
 
     }
