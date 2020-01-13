@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:background="@android:color/darker_gray">
+    android:background="@drawable/border">
 
     <ImageView
         android:id="@+id/singleItemImageView"
@@ -31,6 +31,7 @@
             android:layout_marginBottom="3dp"
             android:maxLines="1"
             android:text="@string/title"
+            android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:maxLines="1"
+            android:textColor="@android:color/background_light"
             android:text="@string/subtitle" />
 
         <LinearLayout
@@ -54,6 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom|left"
                 android:layout_weight="1"
+                android:textColor="@android:color/background_light"
                 android:gravity="bottom|start"
                 android:text="@string/by"
                 android:textStyle="italic" />
@@ -64,11 +67,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom|right"
                 android:layout_weight="1"
-                android:autoText="false"
+                android:textColor="@android:color/background_light"
                 android:drawableStart="@drawable/calendar"
                 android:gravity="bottom"
                 android:text="@string/date"
-                android:textAlignment="textStart"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="10sp"
                 app:autoSizeTextType="uniform" />
