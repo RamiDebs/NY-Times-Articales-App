@@ -29,7 +29,10 @@ class ItemDetailFragment : Fragment() {
 
         // Show the article content as text in a TextView.
         item?.let {
-            rootView.item_detail.text = it.abstract
+            rootView.item_detail.text ="${it.abstract}" +
+                    "\nViews: ${it.views}" +
+                    "\nBy: ${it.source}" +
+                    "\nDate: ${it.publishedDate}"
         }
 
         return rootView
