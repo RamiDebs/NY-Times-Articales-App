@@ -25,6 +25,7 @@ class ItemListActivity : AppCompatActivity() {
     init {
         //calling NY Times URL End point to fill the array with data
         viewModel.createArticleLiveData()
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

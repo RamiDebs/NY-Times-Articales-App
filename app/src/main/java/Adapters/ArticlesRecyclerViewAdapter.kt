@@ -63,7 +63,6 @@ class ArticlesRecyclerViewAdapter(
             itemView.singleItemByTextView.text = item.source
             //getting the first image in the article and load it to the image view 
             item.media?.get(0)?.mediaMetadata?.get(0)?.url.let {itemView.singleItemImageView.loadImage(it.toString())}
-            Log.e("s",""+ item.media?.get(0)?.mediaMetadata?.get(0).toString())
         }
 
     }
