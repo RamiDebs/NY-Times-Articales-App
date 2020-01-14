@@ -24,3 +24,10 @@ Things I used in the app:
 I tried my best to make the code simple and I have added comments.
 
 any questions?
+
+Screen Shots
+![Main Screen](/ScreenShots/1.PNG)
+
+![Deatils Activity](/ScreenShots/2.PNG)
+
+![Clicking on the newspaper icon](/ScreenShots/4.PNG)
