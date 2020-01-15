@@ -8,6 +8,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import model.Result
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 
 class ArticlesViewModel : ViewModel() {
 
@@ -17,24 +19,32 @@ class ArticlesViewModel : ViewModel() {
     val NYTimesAPIServer =
         RetrofitClient.retrofitInstance?.create<NYTimesAPIServer>(
             NYTimesAPIServer::class.java)
-    
-    fun createArticleLiveData(): MutableLiveData<List<Result>> {
-        NYTimesAPIServer?.getRepos()
-            ?.enqueue(object : Callback<NYTimesResponse> {
-                override fun onResponse(call: Call<NYTimesResponse>, response: Response<NYTimesResponse>) {
-                    Log.d(TAG, "call done. with Response " + response.body())
-                    val allServerNYTimesResponse = response.body()
-                    if (allServerNYTimesResponse != null) {
-                            mArticleLiveData.value = allServerNYTimesResponse.results as List<Result>?
-                         }
-                }
 
-                override fun onFailure(call: Call<NYTimesResponse>?, t: Throwable?) {
-                    Log.e(TAG, "call failed. with message" + t?.message)
-                }
-            })
-        return mArticleLiveData
-    }
+      fun  createArticleLiveData(): MutableLiveData<List<Result>> {
+        CoroutineScope(IO).launch {
+
+            NYTimesAPIServer?.getRepos()
+                ?.enqueue(object : Callback<NYTimesResponse> {
+                    override fun onResponse(
+                        call: Call<NYTimesResponse>,
+                        response: Response<NYTimesResponse>
+                    ) {
+                        Log.d(TAG, "call done. with Response " + response.body())
+                        val allServerNYTimesResponse = response.body()
+                        if (allServerNYTimesResponse != null) {
+                            mArticleLiveData.value =
+                                allServerNYTimesResponse.results as List<Result>?
+                        }
+                    }
+
+                    override fun onFailure(call: Call<NYTimesResponse>?, t: Throwable?) {
+                        Log.e(TAG, "call failed. with message" + t?.message)
+                    }
+                })
+        }
+            return mArticleLiveData
+        }
+
 
     fun getMutableLiveData(): MutableLiveData<List<Result>> {return mArticleLiveData}
 

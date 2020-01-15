@@ -16,6 +16,7 @@ It contains 2 views: 1- portrait view (Clicking on the item will open a new acti
 Things I used in the app:
 -MVVM Arch
 -LiveData
+-Coroutines
 -Junit for a simple test
 -Espresso for testing the RView
 -Glide for image loader

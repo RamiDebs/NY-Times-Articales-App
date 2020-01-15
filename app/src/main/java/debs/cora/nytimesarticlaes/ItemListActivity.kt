@@ -12,6 +12,11 @@ import debs.cora.nytimesarticlaes.ui.adapters.ArticlesRecyclerViewAdapter
 import fragments.ItemDetailFragment
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class ItemListActivity : AppCompatActivity() {
@@ -41,20 +46,33 @@ class ItemListActivity : AppCompatActivity() {
             twoPane = true
         }
 
-        viewModel.getMutableLiveData().observe(this, Observer {
-            // check if data is loaded for the first time
-            if(NYTimesArticlesRecycleView.size == 0){
-                setupRecyclerView(NYTimesArticlesRecycleView)
-            }
-            else {
-                // live data is modified/changed so we notify the recycler view
-                //to update the data displayed
-                //we can run a loop to check the items that changed
-                adapter?.setData(viewModel.getMutableLiveData().value!!)
-                adapter?.notifyDataSetChanged()
-            }
+        //running api request on background thread
+        CoroutineScope(IO).launch {
+            startApiRequest()
+        }
 
-        })
+
+    }
+
+    private suspend fun startApiRequest() {
+        //do UI things on App the Main thread
+        withContext(Main) {
+            viewModel.getMutableLiveData().observe(this@ItemListActivity, Observer {
+
+                // check if data is loaded for the first time
+                if (NYTimesArticlesRecycleView.size == 0) {
+
+                    setupRecyclerView(NYTimesArticlesRecycleView)
+
+                } else {
+                    // live data is modified/changed so we notify the recycler view
+                    //to update the data displayed
+                    //we can run a loop to check the items that changed
+                    adapter?.setData(viewModel.getMutableLiveData().value!!)
+                    adapter?.notifyDataSetChanged()
+                }
+            })
+        }
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
@@ -69,7 +87,7 @@ class ItemListActivity : AppCompatActivity() {
             startActivity(browserIntent)
         }
 
-        adapter?.setOnItemClicked {item->
+        adapter?.setOnItemClicked { item ->
             if (twoPane) {
                 val fragment = ItemDetailFragment().apply {
                     arguments = Bundle().apply {
@@ -81,10 +99,10 @@ class ItemListActivity : AppCompatActivity() {
                     .replace(R.id.item_detail_container, fragment)
                     .commit()
             } else {
-                val intent = Intent(ItemListActivity@this, ItemDetailActivity::class.java).apply {
+                val intent = Intent(ItemListActivity@ this, ItemDetailActivity::class.java).apply {
                     this.putExtra("Result", item)
                 }
-                ItemListActivity@this.startActivity(intent)
+                ItemListActivity@ this.startActivity(intent)
             }
         }
         recyclerView.adapter = adapter
